@@ -52,6 +52,16 @@ bool TaskList::updateTask(string& taskName, Task newTask)
 	return false;
 }
 
+bool TaskList::deleteTask(string& taskName)
+{
+	auto it = findByName(taskName);
+	if (it != taskList.end()) {
+		taskList.erase(it);
+		return true;
+	}
+	return false;
+}
+
 
 
 bool TaskList::containElement(string& taskName)
@@ -67,6 +77,8 @@ bool TaskList::containElement(string& taskName)
 
 TaskList TaskList::selectDateLess(string& dateStr)
 {
+	//list<Task> newTaskList;
+	//auto iter = taskList.begin();
 	return TaskList();
 }
 

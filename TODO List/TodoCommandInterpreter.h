@@ -10,7 +10,8 @@ class TodoCommandInterpreter {
 \n Select tasks: select * where {predicate}. Predicate format: date < \"2020-12-12 00:00\" \
 and category=\"cat1\" and status=\"on\" and description like \"text\"\n";
 	TaskList mainTaskList;
-	string popFrontArg(string& args);
+	string popQuotedArgs(string& args);
+	string popSpacedArgs(string& args);
 	bool add(string &args);
 	bool done(string &args);
 	bool update(string &args);
