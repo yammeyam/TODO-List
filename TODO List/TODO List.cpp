@@ -9,16 +9,11 @@
 using namespace std;
 
 #include <functional>
-int compare(int a, int b, std::function<bool(int, int)> oper) {
-	return oper(a, b);
-}
+
 int main() {
 
-	int a = 5;
-	int b = 8;
-	cout<<compare(a, b, less<>{});
-	//TodoCommandInterpreter inter;
-	//inter.startCommandLine();
+	TodoCommandInterpreter inter;
+	inter.startCommandLine();
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"

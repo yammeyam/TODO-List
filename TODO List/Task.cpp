@@ -1,6 +1,6 @@
 #include "Task.h"
 
-Task::Task(): status{0},dateMS{-1}
+Task::Task(): status{ false },dateMS{-1}
 {
 
 }
@@ -12,9 +12,10 @@ Task::Task(const Task& task)
 	dateMS = task.dateMS;
 	category = task.category;
 	dateStr = task.dateStr;
+	status = task.status;
 }
 
-Task::Task(string name, string description,string dateString,  string category): status { 0 },dateMS { -1 }
+Task::Task(string name, string description,string dateString,  string category): status { false },dateMS { -1 }
 {
 	this->setName(name);
 	this->setDescription(description);
@@ -103,6 +104,7 @@ bool Task::getStatus()
 
 void Task::print()
 {
-	cout << "Name: " << name << "\t\t" << "Description: " << description << "\t\t";
-	cout << "Date: " << dateStr << "\t\t"<<"Category: "<<category<<endl;
+	
+	cout<< "Name: "  << name << "\t Description: " <<description ;
+	cout << "\t Date: " << dateStr << category  << "\t Status: " << (status ? "done" : "unfinished") << endl;
 }
