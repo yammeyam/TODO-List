@@ -106,5 +106,5 @@ void Task::print()
 {
 	
 	cout<< "Name: "  << name << "\t Description: " <<description ;
-	cout << "\t Date: " << dateStr << category  << "\t Status: " << (status ? "done" : "unfinished") << endl;
+	cout << "\t Date: " << dateStr <<"\t Category: " << category << "\t Status: " << (status ? "done" : "unfinished") << endl;
 }

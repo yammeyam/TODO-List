@@ -26,7 +26,6 @@ bool TaskList::addTask(Task newTask)
 {
 	if (newTask.isCompletelyFilled()) {
 		taskList.push_back(newTask);
-		newTask.print();
 		return true;
 	}
 	return false;
@@ -145,6 +144,7 @@ TaskList TaskList::selectByStatus(bool status)
 	auto iter = taskList.begin();
 	while (iter != taskList.end()) {
 		if (iter->getStatus() == status) newList.addTask(*iter);
+		++iter;
 	}
 	return newList;
 }

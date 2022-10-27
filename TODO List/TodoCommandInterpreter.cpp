@@ -95,18 +95,18 @@ bool TodoCommandInterpreter::select(string& args)
     string fieldValue = "";
     string operat="";
     if (popSpacedArgs(args) =="where" && args.length() != 0) {
-        if (args[0] == '}') {
-            args = args.substr(1, args.length() - 1);
+        if (args[0] == '{'&& args[args.length()-1]=='}') {
+            args = args.substr(1, args.length() - 2);
             while (!args.empty()) {
                 switch (static_cast<ArgumentType>(typeCounter))
                 {
                 case ArgumentType::FIELD_NAME:
                     fieldName = popSpacedArgs(args);
-                    if (fieldName != "date" || fieldName != "category" || fieldName != "status" || fieldName != "description") return 0;
+                    if (fieldName != "date" && fieldName != "category" && fieldName != "status" && fieldName != "description") return 0;
                     break;
                 case ArgumentType::OPERATOR:
                     operat = popSpacedArgs(args);
-                    if (operat != ">" || operat != "<" || operat != ">=" || operat != "<=" || operat != "=" || operat != "like") return 0;
+                    if (operat != ">" && operat != "<" && operat != ">=" && operat != "<=" && operat != "=" && operat != "like") return 0;
                     break;
                 case ArgumentType::FIELD_VALUE:
                     fieldValue = popQuotedArgs(args);
@@ -125,8 +125,8 @@ bool TodoCommandInterpreter::select(string& args)
                     }
                     else if (fieldName == "status") {
                         if (operat == "=") {
-                            if (fieldValue == "on")  selectedList = selectedList.selectByStatus(1);
-                            else if (fieldValue == "off") selectedList = selectedList.selectByStatus(0);
+                            if (fieldValue == "done")  selectedList = selectedList.selectByStatus(1);
+                            else if (fieldValue == "unfinished") selectedList = selectedList.selectByStatus(0);
                             else return 0;
                         }
                         else return 0;
@@ -138,18 +138,18 @@ bool TodoCommandInterpreter::select(string& args)
                     }
                     break;
                 case ArgumentType::AND:
-                    if (args.length() > 1) {
-                        if (popSpacedArgs(args) != "and") return 0;
-                        fieldName = "";
-                        operat = "";
-                        fieldValue = "";
-                    }
-                    else if (args[0] == '}')  args = "";
-                    else return 0;
+                    //if (args.length() > 1) {
+                    if (popSpacedArgs(args) != "and") return 0;
+                    fieldName = "";
+                    operat = "";
+                    fieldValue = "";
+                    //}
+                  //  else if (args[0] == '}')  args = "";
+                  //  else return 0;
                     break;
                 }
                 ++typeCounter;
-                if (typeCounter > 3) typeCounter = 0;
+                if (typeCounter > 2) typeCounter = 0;
             }
         }
     }
