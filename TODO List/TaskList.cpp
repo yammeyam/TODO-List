@@ -73,58 +73,44 @@ bool TaskList::containElement(string& taskName)
 	return false;
 }
 
-
-
-TaskList TaskList::selectDateLess(string& dateStr)
+TaskList TaskList::selectByName(string& taskName, bool strictChoice)
 {
-	//list<Task> newTaskList;
-	//auto iter = taskList.begin();
-	return TaskList();
+	TaskList newList;
+	auto iter = taskList.begin();
+	if (strictChoice) {
+		while (iter != taskList.end()) {
+			if (iter->getName() == taskName) newList.addTask(*iter);
+		}
+	}
+	else {
+		while (iter != taskList.end()) {
+			size_t index = iter->getName().find(taskName);
+			if (index != string::npos) {
+				newList.addTask(*iter);
+			}
+		}
+	}
+	return  newList;
 }
 
-TaskList TaskList::selectDateLessEq(string& dateStr)
+TaskList TaskList::selectByDate(string& dateStr, DateComparator comparatorFunc)
 {
-	return TaskList();
+	return  TaskList();
 }
 
-TaskList TaskList::selectDateMore(string& dateStr)
+TaskList TaskList::selectByCategory(string& category, bool strictChoice)
 {
-	return TaskList();
+	return  TaskList();
 }
 
-TaskList TaskList::selectDateMoreEq(string& dateStr)
+TaskList TaskList::selectByStatus(bool status)
 {
-	return TaskList();
+	return   TaskList();
 }
 
-TaskList TaskList::selectDateEq(string& dateStr)
+TaskList TaskList::selectByDescription(string& description, bool strictChoice)
 {
-	return TaskList();
-}
-
-TaskList TaskList::selectCategoryEq(string& dateStr)
-{
-	return TaskList();
-}
-
-TaskList TaskList::selectCategoryLike(string& dateStr)
-{
-	return TaskList();
-}
-
-TaskList TaskList::selectStatusEq(bool status)
-{
-	return TaskList();
-}
-
-TaskList TaskList::selectDescriptionEq(string& dateStr)
-{
-	return TaskList();
-}
-
-TaskList TaskList::selectDescriptionLike(string& dateStr)
-{
-	return TaskList();
+	return  TaskList();
 }
 
 void TaskList::print()

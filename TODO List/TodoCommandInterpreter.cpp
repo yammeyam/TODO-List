@@ -1,6 +1,6 @@
 #include "TodoCommandInterpreter.h"
 
-string TodoCommandInterpreter::popQuotedArgs(string& args)
+string TodoCommandInterpreter::popQuotedArgs(string& args)  
 {
     if (args.length() == 0) return "";
     if (args[0] != '"') {
@@ -10,7 +10,6 @@ string TodoCommandInterpreter::popQuotedArgs(string& args)
         size_t indexOfSeparator=args.find('"',1);
         if (indexOfSeparator != string::npos) {
             string result = args.substr(1, indexOfSeparator - 1);
-            cout << result << endl;
             if (indexOfSeparator + 2 < args.length()) {
                 args = args.substr(indexOfSeparator + 2, args.length()-(indexOfSeparator + 2));
             }
@@ -23,7 +22,16 @@ string TodoCommandInterpreter::popQuotedArgs(string& args)
 
 string TodoCommandInterpreter::popSpacedArgs(string& args)
 {
-    return string();
+    size_t indexOfSeparator = args.find(' ', 0);
+    if (indexOfSeparator != string::npos) {
+        string result = args.substr(0, indexOfSeparator);
+        if (indexOfSeparator + 1 < args.length()) {
+            args = args.substr(indexOfSeparator + 1, args.length() - (indexOfSeparator + 1));
+        }
+        else args = "";
+        return result;
+    }
+    return "";
 }
 
 bool TodoCommandInterpreter::add(string& args)
@@ -43,7 +51,7 @@ bool TodoCommandInterpreter::add(string& args)
 
 bool TodoCommandInterpreter::done(string& args)
 {
-    mainTaskList.setDone(args);
+   return mainTaskList.setDone(args);
 }
 
 bool TodoCommandInterpreter::update(string& args)
@@ -73,11 +81,69 @@ bool TodoCommandInterpreter::update(string& args)
 
 bool TodoCommandInterpreter::del(string& args)
 {
-    mainTaskList.deleteTask(args);
+    return mainTaskList.deleteTask(args);
 }
 
-void TodoCommandInterpreter::select(string& args)
+bool TodoCommandInterpreter::select(string& args)
 {
+    TaskList selectedList=mainTaskList;
+    int typeCounter=0;//A counter to determine the expected type of the argument from ArgumentType enum 
+    string fieldName = "";
+    string fieldValue = "";
+    string operat="";
+    while (!args.empty()) {
+        switch (static_cast<ArgumentType>(typeCounter))
+        {
+        case ArgumentType::FIELD_NAME:
+            fieldName = popSpacedArgs(args);
+            if (fieldName != "date" || fieldName != "category" || fieldName != "status" || fieldName != "description") return 0;
+            break;
+        case ArgumentType::OPERATOR:
+            operat= popSpacedArgs(args);
+            if (operat != ">" || operat != "<" || operat != ">=" || operat != "<="|| operat != "="|| operat != "like") return 0;
+            break;
+        case ArgumentType::FIELD_VALUE:
+            fieldValue = popQuotedArgs(args);
+            if (fieldName == "date") {
+                if (operat == ">") selectedList = selectedList.selectByDate(fieldValue, std::greater<>{});
+                else if (operat == "<") selectedList = selectedList.selectByDate(fieldValue, std::less<>{});
+                else if (operat == ">=") selectedList = selectedList.selectByDate(fieldValue, std::greater_equal<>{});
+                else if (operat == "<=") selectedList = selectedList.selectByDate(fieldValue, std::less_equal<>{});
+                else if (operat == "=") selectedList = selectedList.selectByDate(fieldValue, std::equal_to<>{});
+                else return 0;
+            }
+            else if (fieldName == "category") {
+                if (operat == "=") selectedList = selectedList.selectByCategory(fieldValue);
+                else if (operat == "like") selectedList = selectedList.selectByCategory(fieldValue, 0);
+                else return 0;
+            }
+            else if (fieldName == "status") {
+                if (operat == "=") {
+                    if (fieldValue == "on")  selectedList = selectedList.selectByStatus(1);
+                    else if (fieldValue == "off") selectedList = selectedList.selectByStatus(0);
+                    else return 0;
+                }
+                else return 0;
+            }
+            else if (fieldName == "description") {
+                if (operat == "=") selectedList = selectedList.selectByDescription(fieldValue);
+                else if (operat == "like") selectedList = selectedList.selectByDescription(fieldValue, 1);
+                else return 0;
+            }
+            break;
+        case ArgumentType::AND:
+            if (popSpacedArgs(args) != "and") return 0;
+            fieldName = "";
+            operat = "";
+            fieldValue = "";
+            break;
+        default:
+            return 0;
+        }
+        ++typeCounter;
+        if (typeCounter > 3) typeCounter = 0;
+    }
+    selectedList.print();
 }
 
 TodoCommandInterpreter::TodoCommandInterpreter()
