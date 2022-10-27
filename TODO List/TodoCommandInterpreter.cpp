@@ -138,18 +138,14 @@ bool TodoCommandInterpreter::select(string& args)
                     }
                     break;
                 case ArgumentType::AND:
-                    //if (args.length() > 1) {
                     if (popSpacedArgs(args) != "and") return 0;
                     fieldName = "";
                     operat = "";
                     fieldValue = "";
-                    //}
-                  //  else if (args[0] == '}')  args = "";
-                  //  else return 0;
                     break;
                 }
                 ++typeCounter;
-                if (typeCounter > 2) typeCounter = 0;
+                if (typeCounter > 3) typeCounter = 0;
             }
         }
     }
