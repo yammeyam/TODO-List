@@ -14,7 +14,7 @@ class TodoCommandInterpreter {
 \n Add new task: add \"name\" \"description\" \"date\" \"category\". Date should be in format 2020-12-12 00:00\
 \n Mark done:  done name\n Update by name: update name\n Delete by name: delete name\
 \n Select tasks: select * where {predicate}. Predicate format: date < \"2020-12-12 00:00\" \
-and category=\"cat1\" and status=\"done\" and description like \"text\"\n";
+and category = \"cat1\" and status = \"done\" and description like \"text\". All arguments and operators must be separated by spaces, parameter values in quotes\n";
 	TaskList mainTaskList;
 	string popQuotedArgs(string& args);	//Method for getting values from quotes
 	string popSpacedArgs(string& args); //Method for getting space separated values

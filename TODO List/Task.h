@@ -6,6 +6,7 @@
 using namespace std;
 
 class Task {
+
 	string name;
 	string description;
 	time_t dateMS; //Date in miliseconds for computation

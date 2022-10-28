@@ -102,7 +102,7 @@ bool TodoCommandInterpreter::select(string& args)
                 {
                 case ArgumentType::FIELD_NAME:
                     fieldName = popSpacedArgs(args);
-                    if (fieldName != "date" && fieldName != "category" && fieldName != "status" && fieldName != "description") return 0;
+                    if (fieldName != "date" && fieldName != "category" && fieldName != "status" && fieldName != "description" && fieldName != "name") return 0;
                     break;
                 case ArgumentType::OPERATOR:
                     operat = popSpacedArgs(args);
@@ -133,7 +133,12 @@ bool TodoCommandInterpreter::select(string& args)
                     }
                     else if (fieldName == "description") {
                         if (operat == "=") selectedList = selectedList.selectByDescription(fieldValue);
-                        else if (operat == "like") selectedList = selectedList.selectByDescription(fieldValue, 1);
+                        else if (operat == "like") selectedList = selectedList.selectByDescription(fieldValue, 0);
+                        else return 0;
+                    }
+                    else if (fieldName == "name") {
+                        if (operat == "=") selectedList = selectedList.selectByName(fieldValue);
+                        else if (operat == "like") selectedList = selectedList.selectByName(fieldValue, 0);
                         else return 0;
                     }
                     break;
@@ -159,7 +164,6 @@ TodoCommandInterpreter::TodoCommandInterpreter()
 
 void TodoCommandInterpreter::startCommandLine()
 {
-
     string command;
     size_t typeCommandIndex;//Index of the main command word(add,update,delete, etc) end.
     string commandType; //Main command word
