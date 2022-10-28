@@ -46,9 +46,14 @@ bool TodoCommandInterpreter::add(string& args)
     description = popQuotedArgs(args);
     date = popQuotedArgs(args);
     category = popQuotedArgs(args);
+    if (mainTaskList.containElement(name)) {
+        cout << "Task with the same name already exists" << endl;
+        return 0;
+    }
     if (args.length() != 0) return false;
     if (name != "" && description != "" && date != "" && category != "") {
         Task newTask(name, description, date, category);
+        
         return (mainTaskList.addTask(newTask));
     } 
     return false;
@@ -184,7 +189,7 @@ void TodoCommandInterpreter::startCommandLine()
         if (commandType == "add") {
             args = command.substr(typeCommandIndex+1, command.length() - typeCommandIndex-1);
             if (add(args) == 0) {
-                cout << "Error in arguments for command \"add\". Format: add \"name\" \"description\" \"date\" \"category\". Date should be in format 2020-12-12 00:00 " << endl;
+                cout << "Task with such arguments cannot be created" << endl;
             }
             else {
                 cout << "Task added successfully" << endl;

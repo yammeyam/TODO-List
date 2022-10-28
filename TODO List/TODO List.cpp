@@ -11,7 +11,7 @@ using namespace std;
 #include <functional>
 
 int main() {
-
+	setlocale(LC_ALL, "Russian");
 	TodoCommandInterpreter inter;
 	inter.startCommandLine();
 }

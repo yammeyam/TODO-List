@@ -51,7 +51,10 @@ bool Task::setDate(string& dateString)
 		dateStr = dateString;
 		return true; 
 	}
-	else return false;
+	else {
+		cout << "Date must be later than 1970-01-01 07:00"<<endl;
+		return false;
+	}
 }
 
 void Task::setCategory(string& category)
