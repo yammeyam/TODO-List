@@ -91,9 +91,9 @@ bool TodoCommandInterpreter::select(string& args)
     TaskList selectedList=mainTaskList;
     if (popSpacedArgs(args) != "*") return 0;
     int typeCounter=0;//A counter to determine the expected type of the argument from ArgumentType enum 
-    string fieldName = "";
-    string fieldValue = "";
-    string operat="";
+    string fieldName = "";//The field by which the selection will be made
+    string fieldValue = "";//Field value to be compared
+    string operat="";//Comparison operator or like
     if (popSpacedArgs(args) =="where" && args.length() != 0) {
         if (args[0] == '{'&& args[args.length()-1]=='}') {
             args = args.substr(1, args.length() - 2);

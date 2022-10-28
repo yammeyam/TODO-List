@@ -16,12 +16,12 @@ class Task {
 public:
 	Task();
 	Task(const Task& task);
-	Task(string name, string description, string dateString, string category);
+	Task(string& name, string& description, string& dateString, string& category);
 	~Task();
-	void setName(string name);
-	void setDescription(string description);
-	bool setDate(string dateString);
-	void setCategory(string category);
+	void setName(string& name);
+	void setDescription(string& description);
+	bool setDate(string& dateString);
+	void setCategory(string& category);
 	void setStatus(bool status);
 	bool isCompletelyFilled();//checking if the object is fully formed
 	string getName();

@@ -15,7 +15,7 @@ Task::Task(const Task& task)
 	status = task.status;
 }
 
-Task::Task(string name, string description,string dateString,  string category): status { false },dateMS { -1 }
+Task::Task(string& name, string& description,string& dateString,  string& category): status { false },dateMS { -1 }
 {
 	this->setName(name);
 	this->setDescription(description);
@@ -27,17 +27,17 @@ Task::~Task()
 {
 }
 
-void Task::setName(string name)
+void Task::setName(string& name)
 {
 	this->name = name;
 }
 
-void Task::setDescription(string description)
+void Task::setDescription(string& description)
 {
 	this->description = description;
 }
 
-bool Task::setDate(string dateString)
+bool Task::setDate(string& dateString)
 {
 	istringstream  dateStream(dateString);
 	tm date{ 0 };
@@ -54,7 +54,7 @@ bool Task::setDate(string dateString)
 	else return false;
 }
 
-void Task::setCategory(string category)
+void Task::setCategory(string& category)
 {
 	this->category = category;
 }
