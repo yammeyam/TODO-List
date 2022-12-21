@@ -1,5 +1,35 @@
 # TODO-List
+TODO List application.
+EN
+Possibilities:
+- Components of the task: title, description, creation date, category, progress status
+- Editing/adding/viewing a task
+- View a list of current tasks with the ability to filter by a given predicate
 
+Commands:
+1) add - add a new task. Arguments can consist of several words separated by a space,
+so each in separate quotes. The date format is "%Y-%m-%d %H:%M" (example 2020-12-12 00:00).
+The date cannot be less than 1970-01-01 07:00
+Adding tasks with the same name is prohibited.
+Format: add "task name" "description" "date" "category"
+2) done - mark the task as completed. For this command, the argument is written without quotes
+through the gap.
+Format: done task name
+3) update - update the task. For this command, the argument is written without quotes, separated by a space.
+Format: update task name
+4) delete - delete a task. For this command, the argument is written without quotes, separated by a space.
+Format: delete task name
+5) select - filter the list of tasks by a certain criterion.
+Command format: select * where {predicate}
+Criteria format: date < "2020-12-12 00:00" and category="cat1" and status="on" and description like "text"
+select *(or select * where{}) - display all tasks. Several criteria are written with and.
+Available date operators: <,<=,=,>=,<. For the title, category, and description, the = or like operators.
+The like operator checks for the presence of the specified substring in a field. For status, only the = operator is possible.
+The status can be either done or unfinished.
+All spaces are respected as in the example:
+select * where {status = "unfinished" and date < "2013-10-01 00:00" and category like "2"}
+
+RU
 Приложение TODO List.
 
 Возможности:
